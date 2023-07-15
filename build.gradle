@@ -35,7 +35,8 @@ dependencies {
 
 
 	//07.13 추가
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 }
 
 tasks.named('test') {

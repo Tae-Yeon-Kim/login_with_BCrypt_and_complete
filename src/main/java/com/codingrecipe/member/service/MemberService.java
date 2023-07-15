@@ -4,6 +4,7 @@ import com.codingrecipe.member.dto.MemberDTO;
 import com.codingrecipe.member.entity.MemberEntity;
 import com.codingrecipe.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,13 +14,13 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
 
-    //블러그 보고 따라하기!!
 
     public void save(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
+        MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO, passwordEncoder);
         memberRepository.save(memberEntity);
 
     }
@@ -54,6 +55,10 @@ public class MemberService {
             //조회 결과가 없다 (해당 이메일을 가진 회원이 없다.)
             return null;
         }
+    }
+
+    public Optional<MemberEntity> findOne(String myEmail){
+        return memberRepository.findByMemberEmail(myEmail);
     }
     ////////////////////
 }

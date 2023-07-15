@@ -4,7 +4,10 @@ package com.codingrecipe.member.controller;
 import com.codingrecipe.member.dto.MemberDTO;
 import com.codingrecipe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +53,25 @@ public class MemberController {
 
         }
     }
+
+    //원본
+    /*@GetMapping("/member/logindashboard")
+    public String login22() {
+        return "temp3";
+    }*/
+
+    @GetMapping("/member/logindashboard")
+    public String login22(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("authorities", user.getAuthorities());
+        model.addAttribute("loginId", user.getUsername());
+        model.addAttribute("loginpassword", user.getPassword());
+
+        System.out.println("authorities : "+user.getAuthorities());
+        System.out.println("loginId : "+user.getUsername());
+        System.out.println("loginpassword : "+user.getPassword());
+        return "temp3";
+    }
+
 
 }
 
